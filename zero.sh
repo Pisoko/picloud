@@ -3,7 +3,6 @@
 # Ubuntu 20.04+ / 22.04+ LTS x86_64 (recommended!) / Debian 11 x86_64
 # Nextcloud latest (or older Versions)
 # Based on nginx, PHP, MariaDB/postgreSQL, Redis, fail2ban, ufw
-# Carsten Rieger IT-Services (https://www.c-rieger.de)
 ##########################################################################################
 
 ##############################
@@ -15,7 +14,7 @@
 #    absoluter Pfad, bspw.: "/var/nc_data"
 # E: Data directory: where to store Nextclud data
 #    absolute path, e.g.: "/var/nc_data"
-NEXTCLOUDDATAPATH="/data"
+NEXTCLOUDDATAPATH="/mnt/nc_data"
 
 # D: Lokaler Nextcloud Administrator
 #    beliebiger Name, bspw.: "nc_admin"
@@ -59,7 +58,7 @@ NEXTCLOUDDNS="ihre.domain.de"
 #    LETSENCRYPT="y" <- inkl. automat. Erneuerungen
 # E: Should the script configure Let's Encrypt certificates?
 #    LETSENCRYPT="y" <- incl. automat. renewals
-LETSENCRYPT="n"
+LETSENCRYPT="y"
 
 # D: Nextcloud Externe IP(v4)
 #    bspw. NEXTCLOUDEXTIP="123.124.125.120"
