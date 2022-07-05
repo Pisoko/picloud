@@ -126,8 +126,6 @@ then
 clear
 echo ""
 echo "*****************************"
-echo "* BITTE ALS ROOT AUSFÜHREN! *"
-echo "*                           *"
 echo "* PLEASE OPERATE AS ROOT!   *"
 echo "*****************************"
 echo ""
@@ -159,7 +157,6 @@ if [ "$(lsb_release -r | awk '{ print $2 }')" = "20.04" ] || [ "$(lsb_release -r
 then
 clear
 echo "*************************************************"
-echo "*  Pre-Installationschecks werden durchgefuehrt *"
 echo "*  Pre-Installationschecks are initiated        *"
 echo "*************************************************"
 echo ""
@@ -182,7 +179,6 @@ else
 clear
 echo ""
 echo "****************************************"
-echo "*   Sie verwenden kein Ubuntu 20/22    *"
 echo "* You aren't operating on Ubuntu 20/22 *"
 echo "****************************************"
 echo ""
@@ -196,14 +192,11 @@ fi
 if [ -e "/var/www/nextcloud/config/config.php" ] || [ -e /etc/nginx/conf.d/nextcloud.conf ]; then
   clear
   echo "*************************************************"
-  echo "* Test: Bestehende Installation ....:::::FAILED *"
   echo "* Test: Previous installation ......:::::FAILED *"
   echo "*************************************************"
   echo ""
-  echo "* Nextcloud ist auf diesem System bereits installiert!"
   echo "* Nextcloud has already been installed on this system!"
   echo ""
-  echo "* Bitte entfernen Sie alles komplett, bevor Sie mit einer Installation fortfahren."
   echo "* Please remove it completely before proceeding to a new installation."
   echo ""
   echo "* Das Uninstall-Skript finden Sie hier // Please find the uninstall script here:"
@@ -212,7 +205,6 @@ if [ -e "/var/www/nextcloud/config/config.php" ] || [ -e /etc/nginx/conf.d/nextc
   exit 1
 else
   echo "*************************************************"
-  echo "* Keine Bestehende Installation gefunden .:: OK *"
   echo "* No previous installation found ......::::: OK *"
   echo "*************************************************"
   echo ""
@@ -223,34 +215,27 @@ fi
 # Verify homedirectory    #
 ###########################
 if [ ! -d "/home/$BENUTZERNAME/" ]; then
-  echo "* Erstelle:  Benutzerverzeichnis .....:::::: OK *"
   echo "* Creating:  Home Directory ..........:::::: OK *"
   echo ""
   mkdir /home/"$BENUTZERNAME"/
-  echo "* Test: Benutzerverzeichnis ........:::::::: OK *"
   echo "* Test: Home directory ..........::::::::::: OK *"
   echo ""
   else
-  echo "* Test: Benutzerverzeichnis ........:::::::: OK *"
   echo "* Test: Home directory ..........::::::::::: OK *"
   echo ""
   fi
 
 if [ ! -d "/home/$BENUTZERNAME/Nextcloud-Installationsskript/" ]; then
-  echo "* Erstelle: Installationsskript-Verzeichnis: OK *"
   echo "* Creating: Install directory .......::::::: OK *"
   echo ""
   mkdir /home/"$BENUTZERNAME"/Nextcloud-Installationsskript/
-  echo "* Test: Installationsskript-Verzeichnis ..:: OK *"
   echo "* Test: Installscript directory .....::::::: OK *"
   echo ""
   else
-  echo "* Test: Installationsskript-Verzeichnis ..:: OK *"
   echo "* Test: Installscript directory .....::::::: OK *"
   echo ""
   fi
   echo "*************************************************"
-  echo "*  Pre-Installationschecks erfolgreich!         *"
   echo "*  Pre-Installation checks successfull!         *"
   echo "*************************************************"
   echo ""
@@ -329,7 +314,6 @@ ${clear}
 ${echo} "*************************************************************************************"
 ${echo} "*                        ACHTUNG! WARNING! ACHTUNG! WARNING!                        *"
 ${echo} "*                                                                                   *"
-${echo} "*   Nextcloud und ALLE Benutzer-Daten und -Dateien werden unwiderruflich gelöscht!  *"
 ${echo} "* Nextcloud as well as ALL user files will be IRREVERSIBLY REMOVED from the system! *"
 ${echo} "*                                                                                   *"
 ${echo} "*************************************************************************************"
@@ -362,7 +346,6 @@ EOF
 ${chmod} +x /home/"$BENUTZERNAME"/Nextcloud-Installationsskript/uninstall.sh
 
 ###########################
-# D: Hostdatei anpassen   #
 # E: Мodify host file     #
 ###########################
 ${cp} /etc/hosts /etc/hosts.bak
@@ -373,7 +356,6 @@ $NEXTCLOUDEXTIP $NEXTCLOUDDNS
 EOF
 
 ###########################
-# D: Systemeinstellungen  #
 # E: System settings      #
 ###########################
 ${apt} install -y figlet
@@ -395,7 +377,6 @@ exec > >(tee -i "/home/$BENUTZERNAME/Nextcloud-Installationsskript/install.log")
 exec 2>&1
 
 ###########################
-# D: Update-Funktion      #
 # E: Update-function      #
 ###########################
 function update_and_clean() {
@@ -406,7 +387,6 @@ function update_and_clean() {
   }
 
 ###########################
-# D: Kosmetische Funktion #
 # E: Cosmetical function  #
 ###########################
 CrI() {
@@ -418,8 +398,6 @@ CrI() {
   }
 
 ###########################
-# D: Relevante Software   #
-#    wird f. apt geblockt #
 # E: Relevant software    #
 #    will be blocked for  #
 #    apt                  #
@@ -433,7 +411,6 @@ function setHOLD() {
   }
 
 ###########################
-# D: Services neu starten #
 # E: Restart services     #
 ###########################
 function restart_all_services() {
@@ -449,7 +426,6 @@ function restart_all_services() {
   }
 
 ###########################
-# D: NC Daten indizieren  #
 # E: NC data index        #
 ###########################
 function nextcloud_scan_data() {
@@ -459,7 +435,6 @@ function nextcloud_scan_data() {
   }
 
 ###########################
-# D: Basissoftware        #
 # E: Required software    #
 ###########################
 ${clear}
@@ -480,7 +455,6 @@ ${apt} install -y debian-archive-keyring debian-keyring
 fi
 
 ###########################
-# D: Energiesparmodus: aus#
 # E: Energy mode: off     #
 ###########################
 ${systemctl} mask sleep.target suspend.target hibernate.target hybrid-sleep.target
@@ -531,19 +505,16 @@ else
 fi
 
 ###########################
-# D: Entfernen Autoupdates#
 # E: Remove unatt.upgrades#
 ###########################
 ${apt} purge -y unattended-upgrades
 
 ###########################
-# D: Systemaktualisierung #
 # E: System update        #
 ###########################
 update_and_clean
 
 ###########################
-# D: Bereinigung          #
 # E: Clean Up             #
 ###########################
 ${apt} remove -y apache2 nginx nginx-common nginx-full --allow-change-held-packages
@@ -611,7 +582,6 @@ EOF
 ${service} nginx restart
 
 ###########################
-# D: Verzeichnisse anlegen#
 # E: Create directories   #
 ###########################
 ${mkdir} -p /var/log/nextcloud /var/www/letsencrypt/.well-known/acme-challenge /etc/letsencrypt/rsa-certs /etc/letsencrypt/ecc-certs
@@ -620,7 +590,6 @@ ${chmod} -R 770 /etc/letsencrypt
 ${chown} -R www-data:www-data /var/log/nextcloud /var/www/ /etc/letsencrypt
 
 ###########################
-# D: Hinzufügen ACME-User #
 # E: Create ACME-user     #
 ###########################
 ${adduser} --disabled-login --gecos "" acmeuser
@@ -1001,16 +970,16 @@ ${sed} -i "s/server_name cloud.server.io;/server_name $(hostname) $NEXTCLOUDDNS;
 ###########################
 (/usr/bin/crontab -u www-data -l ; echo "*/5 * * * * /usr/bin/php -f /var/www/nextcloud/cron.php > /dev/null 2>&1") | /usr/bin/crontab -u www-data -
 
-###########################
-# Neustart/Restart NGINX  #
-###########################
+##################
+# Restart NGINX  #
+##################
 ${service} nginx restart
 ${clear}
 
-###########################
-# Herunterladen/Download  #
-# Nextcloud               #
-###########################
+#############
+# Download  #
+# Nextcloud #
+#############
 ${echo} "Downloading:" $NCRELEASE
 ${wget} -q https://download.nextcloud.com/server/releases/$NCRELEASE & CrI
 ${wget} -q https://download.nextcloud.com/server/releases/$NCRELEASE.md5
@@ -1060,7 +1029,7 @@ declare -l YOURSERVERNAME
 YOURSERVERNAME=$(hostname)
 
 ###########################
-# Optimieren/Optimizing   #
+# Optimizing              #
 # Nextcloud config.php    #
 ###########################
 ${sudo} -u www-data ${cp} /var/www/nextcloud/config/config.php /var/www/nextcloud/config/config.php.bak
@@ -1133,14 +1102,13 @@ EOF
 ${sed} -i 's/^[ ]*//' /var/www/nextcloud/config/config.php
 
 ###########################
-# Nextcloud Berechtigungen#
 # Nextcloud Permissions   #
 ###########################
 ${chown} -R www-data:www-data /var/www
 
-###########################
-# Neustart/Restart        #
-###########################
+##################
+# Restart        #
+##################
 restart_all_services
 
 ###########################
@@ -1201,7 +1169,6 @@ ${service} ufw restart
 ${service} fail2ban restart
 
 ###########################
-# D: Nextcloud Anpassungen#
 # E: Nextcloud customizing#
 ###########################
 ${clear}
@@ -1257,7 +1224,6 @@ ${sudo} -u www-data /usr/bin/php -f /var/www/nextcloud/cron.php & CrI
 setHOLD
 
 ###########################
-# D: LE-Zertifikate       #
 # E: LE certificates      #
 ###########################
 if [ $LETSENCRYPT == "y" ]
@@ -1285,7 +1251,6 @@ ${echo} ""
 $lsbrelease -ar
 
 ###########################
-# D: Abschlußbildschirm   #
 # E: Final screen         #
 ###########################
 ${clear}
@@ -1344,7 +1309,6 @@ EOF
 fi
 
 ###########################
-# D: Update-Skript anlegen#
 # E: Create Update-Script #
 ###########################
 ${touch} /home/"$BENUTZERNAME"/Nextcloud-Installationsskript/update.sh
@@ -1379,7 +1343,6 @@ history -c
 history -w
 
 ###########################
-# Laufzeit Berechnung     #
 # Calculating runtime     #
 ###########################
 ${echo} ""
