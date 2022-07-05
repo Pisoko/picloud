@@ -1134,12 +1134,19 @@ ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable survey_clien
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable firstrunwizard
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable federation
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable support
+${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable accessibility
+${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable oauth2
+${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable recommendations
+${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable twofactor_backupcodes
+${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable weather_status
+${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable workflowengine
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ config:app:set settings profile_enabled_by_default --value="0"
+${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ config:app:set text workspace_available --value=0
+${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ config:app:set files default_quota --value '10 GB'
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:enable admin_audit
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:enable files_pdfviewer
-${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:enable contacts
-${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:enable calendar
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:enable groupfolders
+
 if [ $NEXTCLOUDOFFICE == "y" ]
 then
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:install richdocuments
@@ -1166,7 +1173,7 @@ ${clear}
 nextcloud_scan_data
 ${service} nginx restart
 ${echo} ""
-${echo} " ystem optimizations"
+${echo} "System optimizations"
 ${echo} ""
 ${echo} "It will take a few minutes - please be patient!"
 ${echo} ""
