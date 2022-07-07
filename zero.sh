@@ -954,6 +954,8 @@ fi
 ${echo} "Extracting:" $NCRELEASE
 ${tar} -xjf $NCRELEASE -C /var/www & CrI
 ${chown} -R www-data:www-data /var/www/
+${mkdir} /mnt/skeleton
+${chown} -R www-data:www-data /mnt/skeleton/
 ${rm} -f $NCRELEASE $NCRELEASE.md5
 restart_all_services
 
@@ -1050,7 +1052,7 @@ array (
 ),
 'quota_include_external_storage' => false,
 'share_folder' => '/Freigaben',
-'skeletondirectory' => '',
+'skeletondirectory' => '/mnt/skeleton',
 'trashbin_retention_obligation' => 'auto, 7',
 );
 EOF
@@ -1137,6 +1139,7 @@ ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable support
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable accessibility
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable recommendations
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable weather_status
+${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ app:disable dashboard
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ config:app:set settings profile_enabled_by_default --value="0"
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ config:app:set text workspace_available --value=0
 ${sudo} -u www-data /usr/bin/php /var/www/nextcloud/occ config:app:set files default_quota --value '10 GB'
